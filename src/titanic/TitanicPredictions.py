@@ -41,10 +41,10 @@ def read_file(filename):
     return data, Y, data_full
 
 
-filename = "train.csv"
+filename = "../../data/titanic/train.csv"
 X, Y, _ = read_file(filename)
 X, Y = shuffle(X, Y, random_state=1)
-train_x, test_x, train_y, test_y = train_test_split(X, Y, test_size=0.1, random_state=100)
+train_x, test_x, train_y, test_y = train_test_split(X, Y, test_size=0.2, random_state=100)
 
 
 hidden_layer_neurons = 5
@@ -56,10 +56,10 @@ epochs = 20000
 x = tf.placeholder(tf.float32, [None, len(columns)])
 y = tf.placeholder(tf.float32, [None, output_layer_neurons])
 
-W1 = tf.Variable(tf.truncated_normal([len(columns), hidden_layer_neurons]))
+W1 = tf.Variable(tf.truncated_normal([len(columns), hidden_layer_neurons], stddev=0.03))
 b1 = tf.Variable(tf.truncated_normal([hidden_layer_neurons]))
 
-W3 = tf.Variable(tf.truncated_normal([hidden_layer_neurons, hidden_layer2_neurons]))
+W3 = tf.Variable(tf.truncated_normal([hidden_layer_neurons, hidden_layer2_neurons], stddev=0.08))
 b3 = tf.Variable(tf.truncated_normal([hidden_layer2_neurons]))
 
 W2 = tf.Variable(tf.truncated_normal([hidden_layer2_neurons, output_layer_neurons]))
@@ -103,7 +103,7 @@ print(accuracy)
 
 
 
-model_test = "test.csv"
+model_test = "../../data/titanic/test.csv"
 X,Y, dtf = read_file(model_test)
 
 output = tf.argmax(output_layer, 1)
